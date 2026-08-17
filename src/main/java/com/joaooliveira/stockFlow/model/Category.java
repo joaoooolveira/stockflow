@@ -10,14 +10,14 @@ public class Category {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_category;
+    private Integer id_category;
     private String name_category;
 
-    public int getId_category() {
+    public Integer getId_category() {
         return id_category;
     }
 
-    public void setId_category(int id_category) {
+    public void setId_category(Integer id_category) {
         this.id_category = id_category;
     }
 

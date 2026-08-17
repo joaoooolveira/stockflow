@@ -6,6 +6,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import java.time.LocalDate;
 
 @Entity
@@ -13,28 +14,30 @@ public class Movement {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_movement;
-    private int id_product;
+    private Integer id_movement;
+    
+    @ManyToOne
+    private Product product;
     
     @Enumerated(EnumType.STRING)
     private TypeMovement type_movement;
     private int quantity_movement;
     private LocalDate date_movement;
 
-    public int getId_movement() {
+    public Integer getId_movement() {
         return id_movement;
     }
 
-    public void setId_movement(int id_movement) {
+    public void setId_movement(Integer id_movement) {
         this.id_movement = id_movement;
     }
 
-    public int getId_product() {
-        return id_product;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setId_product(int id_product) {
-        this.id_product = id_product;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public int getQuantity_movement() {
