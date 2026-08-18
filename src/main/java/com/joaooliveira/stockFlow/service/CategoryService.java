@@ -1,13 +1,25 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.joaooliveira.stockFlow.service;
 
-/**
- *
- * @author joaooliveira
- */
+import com.joaooliveira.stockFlow.model.Category;
+import com.joaooliveira.stockFlow.repository.CategoryRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
 public class CategoryService {
+
+    private final CategoryRepository categoryRepository;
+
+    public CategoryService(CategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
+    }
+
+    public List<Category> findAll() {
+        return categoryRepository.findAll();
+    }
     
+    public Category save(Category category) {
+        return categoryRepository.save(category);
+    }
 }
