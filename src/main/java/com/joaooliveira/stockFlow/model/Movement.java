@@ -6,6 +6,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import java.time.LocalDate;
 
@@ -17,6 +18,7 @@ public class Movement {
     private Integer id_movement;
     
     @ManyToOne
+    @JoinColumn(name = "product_id_product")
     private Product product;
     
     @Enumerated(EnumType.STRING)

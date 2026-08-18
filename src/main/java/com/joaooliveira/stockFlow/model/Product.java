@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Product {
@@ -14,6 +16,10 @@ public class Product {
     private String name_product;
     private double price_product;
     private int quantity_product;
+    
+    @ManyToOne
+    @JoinColumn(name = "category_id_category")
+    private Category category;
 
     public Integer getId_product() {
         return id_product;
