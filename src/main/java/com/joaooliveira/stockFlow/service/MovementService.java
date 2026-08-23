@@ -1,5 +1,6 @@
 package com.joaooliveira.stockFlow.service;
 
+import com.joaooliveira.stockFlow.exception.BusinessException;
 import com.joaooliveira.stockFlow.model.Movement;
 import com.joaooliveira.stockFlow.model.Product;
 import com.joaooliveira.stockFlow.model.TypeMovement;
@@ -31,15 +32,19 @@ public class MovementService {
     public Movement save(Movement movement) {
 
         if (movement.getQuantity_movement() <= 0) {
-            return null;
+            throw new BusinessException(
+                "A quantidade da movimentação deve ser maior que zero."
+            );
         }
 
         Product product = productRepository
-                .findById(movement.getProduct().getId_product())
-                .orElse(null);
-    
+            .findById(movement.getProduct().getId_product())
+            .orElse(null);
+
         if (product == null) {
-            return null;
+            throw new BusinessException(
+                "Produto não encontrado."
+            );
         }
 
         if (movement.getType_movement() == TypeMovement.ENTRADA) {
@@ -52,9 +57,11 @@ public class MovementService {
         } else if (movement.getType_movement() == TypeMovement.SAIDA) {
 
             if (movement.getQuantity_movement()
-                    > product.getQuantity_product()) {
+                > product.getQuantity_product()) {
 
-                return null;
+                throw new BusinessException(
+                    "Estoque insuficiente para realizar a saída."
+                );
             }
 
             product.setQuantity_product(
@@ -63,7 +70,10 @@ public class MovementService {
             );
 
         } else {
-            return null;
+
+            throw new BusinessException(
+                "Tipo de movimentação inválido."
+            );
         }
 
         productRepository.save(product);
