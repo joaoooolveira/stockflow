@@ -26,4 +26,21 @@ public class CategoryService {
     public Category findById(Integer id) {
         return categoryRepository.findById(id).orElse(null);
     }
+    
+    public void deleteById(Integer id) {
+        categoryRepository.deleteById(id);
+    }
+    
+    public Category update(Integer id, Category category) {
+
+        Category categoryDatabase = categoryRepository.findById(id).orElse(null);
+
+        if (categoryDatabase == null) {
+            return null;
+        }
+
+        categoryDatabase.setName_category(category.getName_category());
+
+        return categoryRepository.save(categoryDatabase);
+    }
 }

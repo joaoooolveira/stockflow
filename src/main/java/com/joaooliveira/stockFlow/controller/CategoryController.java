@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequestMapping("/categories")
@@ -35,5 +37,18 @@ public class CategoryController {
     @GetMapping("/{id}")
     public Category findById(@PathVariable Integer id) {
         return categoryService.findById(id);
+    }
+    
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable Integer id) {
+        categoryService.deleteById(id);
+    }
+    
+    @PutMapping("/{id}")
+    public Category update(
+            @PathVariable Integer id,
+            @RequestBody Category category) {
+
+        return categoryService.update(id, category);
     }
 }
