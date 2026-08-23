@@ -4,10 +4,13 @@ import com.joaooliveira.stockFlow.model.Category;
 import com.joaooliveira.stockFlow.service.CategoryService;
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import java.util.List;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("/categories")
@@ -27,5 +30,10 @@ public class CategoryController {
     @PostMapping
     public Category save(@RequestBody Category category) {
     return categoryService.save(category);
+    }
+    
+    @GetMapping("/{id}")
+    public Category findById(@PathVariable Integer id) {
+        return categoryService.findById(id);
     }
 }
