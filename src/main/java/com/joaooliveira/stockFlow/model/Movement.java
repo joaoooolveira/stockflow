@@ -18,7 +18,7 @@ public class Movement {
     private Integer id_movement;
     
     @ManyToOne
-    @JoinColumn(name = "product_id_product")
+    @JoinColumn(name = "id_product")
     private Product product;
     
     @Enumerated(EnumType.STRING)

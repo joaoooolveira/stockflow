@@ -1,13 +1,32 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.joaooliveira.stockFlow.controller;
 
-/**
- *
- * @author joaooliveira
- */
+import com.joaooliveira.stockFlow.model.Movement;
+import com.joaooliveira.stockFlow.service.MovementService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+@RestController
+@RequestMapping("/movements")
 public class MovementController {
+
+    private final MovementService movementService;
+
+    public MovementController(MovementService movementService) {
+        this.movementService = movementService;
+    }
+
+    @GetMapping
+    public List<Movement> findAll() {
+        return movementService.findAll();
+    }
     
+    @PostMapping
+    public Movement save(@RequestBody Movement movement) {
+        return movementService.save(movement);
+    }
 }
