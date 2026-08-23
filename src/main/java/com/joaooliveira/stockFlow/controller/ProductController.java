@@ -3,9 +3,11 @@ package com.joaooliveira.stockFlow.controller;
 import com.joaooliveira.stockFlow.model.Product;
 import com.joaooliveira.stockFlow.service.ProductService;
 import java.util.List;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,5 +35,18 @@ public class ProductController {
     @GetMapping("/{id}")
     public Product findById(@PathVariable Integer id) {
         return productService.findById(id);
+    }
+    
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable Integer id) {
+        productService.deleteById(id);
+    }
+    
+    @PutMapping("/{id}")
+    public Product update(
+            @PathVariable Integer id,
+            @RequestBody Product product) {
+
+        return productService.update(id, product);
     }
 }
