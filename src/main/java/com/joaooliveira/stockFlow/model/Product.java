@@ -52,5 +52,14 @@ public class Product {
     public void setQuantity_product(int quantity_product) {
         this.quantity_product = quantity_product;
     }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+    
     
 }
