@@ -8,6 +8,7 @@ import com.joaooliveira.stockFlow.repository.ProductRepository;
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class MovementService {
@@ -26,12 +27,17 @@ public class MovementService {
         return movementRepository.findAll();
     }
     
+    @Transactional
     public Movement save(Movement movement) {
+
+        if (movement.getQuantity_movement() <= 0) {
+            return null;
+        }
 
         Product product = productRepository
                 .findById(movement.getProduct().getId_product())
                 .orElse(null);
-
+    
         if (product == null) {
             return null;
         }
@@ -45,7 +51,9 @@ public class MovementService {
 
         } else if (movement.getType_movement() == TypeMovement.SAIDA) {
 
-            if (movement.getQuantity_movement() > product.getQuantity_product()) {
+            if (movement.getQuantity_movement()
+                    > product.getQuantity_product()) {
+
                 return null;
             }
 
@@ -53,14 +61,20 @@ public class MovementService {
                     product.getQuantity_product()
                     - movement.getQuantity_movement()
             );
+
+        } else {
+            return null;
         }
 
         productRepository.save(product);
 
         movement.setProduct(product);
-
         movement.setDate_movement(LocalDate.now());
 
         return movementRepository.save(movement);
+    }
+    
+    public Movement findById(Integer id) {
+        return movementRepository.findById(id).orElse(null);
     }
 }
