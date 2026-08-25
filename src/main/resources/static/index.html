@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>StockFlow</title>
+
+    <link
+        rel="stylesheet"
+        href="/css/style.css">
+
+</head>
+
+<body>
+
+<div id="toast-container"></div>
+
+<div class="app">
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <h1>StockFlow</h1>
+
+            <span>Controle de Estoque</span>
+
+        </div>
+
+        <nav>
+
+            <button
+                onclick="showPage('dashboard')"
+                class="nav-item active">
+
+                Dashboard
+
+            </button>
+
+            <button
+                onclick="showPage('products')"
+                class="nav-item">
+
+                Produtos
+
+            </button>
+
+            <button
+                onclick="showPage('categories')"
+                class="nav-item">
+
+                Categorias
+
+            </button>
+
+            <button
+                onclick="showPage('movements')"
+                class="nav-item">
+
+                Movimentações
+
+            </button>
+
+        </nav>
+
+    </aside>
+
+    <main class="main">
+
+        <header class="header">
+
+            <div>
+
+                <h2 id="page-title">
+                    Dashboard
+                </h2>
+
+                <p id="page-description">
+                    Visão geral do seu estoque
+                </p>
+
+            </div>
+
+        </header>
+
+        <section id="content">
+
+            <div
+                id="dashboard-page"
+                class="page">
+
+                <div class="cards">
+
+                    <div class="card">
+
+                        <span>
+                            Produtos
+                        </span>
+
+                        <strong id="total-products">
+                            0
+                        </strong>
+
+                    </div>
+
+                    <div class="card">
+
+                        <span>
+                            Categorias
+                        </span>
+
+                        <strong id="total-categories">
+                            0
+                        </strong>
+
+                    </div>
+
+                    <div class="card">
+
+                        <span>
+                            Movimentações
+                        </span>
+
+                        <strong id="total-movements">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+                <div class="panel dashboard-stock-panel">
+
+                    <div class="panel-header">
+
+                        <h3>
+                            Produtos em estoque
+                        </h3>
+
+                    </div>
+
+                    <div class="table-container">
+
+                        <table>
+
+                            <thead>
+
+                            <tr>
+
+                                <th>
+                                    Produto
+                                </th>
+
+                                <th>
+                                    Categoria
+                                </th>
+
+                                <th>
+                                    Preço
+                                </th>
+
+                                <th>
+                                    Quantidade
+                                </th>
+
+                            </tr>
+
+                            </thead>
+
+                            <tbody
+                                id="dashboard-products">
+                            </tbody>
+
+                        </table>
+
+                        <div
+                            id="dashboard-empty"
+                            class="empty-state hidden">
+
+                            <div class="empty-icon">
+                                📦
+                            </div>
+
+                            <strong>
+                                Nenhum produto encontrado
+                            </strong>
+
+                            <span>
+                                Cadastre produtos para começar a gerenciar seu estoque.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div
+                id="products-page"
+                class="page hidden">
+
+                <div class="page-actions">
+
+                    <div>
+
+                        <h3>
+                            Produtos
+                        </h3>
+
+                        <p>
+                            Gerencie os produtos do estoque.
+                        </p>
+
+                    </div>
+
+                    <button
+                        class="primary-button"
+                        onclick="openProductForm()">
+
+                        + Novo Produto
+
+                    </button>
+
+                </div>
+
+                <div class="panel">
+
+                    <table>
+
+                        <thead>
+
+                        <tr>
+
+                            <th>
+                                ID
+                            </th>
+
+                            <th>
+                                Produto
+                            </th>
+
+                            <th>
+                                Categoria
+                            </th>
+
+                            <th>
+                                Preço
+                            </th>
+
+                            <th>
+                                Estoque
+                            </th>
+
+                            <th>
+                                Ações
+                            </th>
+
+                        </tr>
+
+                        </thead>
+
+                        <tbody
+                            id="products-table">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+            <div
+                id="categories-page"
+                class="page hidden">
+
+                <div class="page-actions">
+
+                    <div>
+
+                        <h3>
+                            Categorias
+                        </h3>
+
+                        <p>
+                            Gerencie as categorias dos produtos.
+                        </p>
+
+                    </div>
+
+                    <button
+                        class="primary-button"
+                        onclick="openCategoryForm()">
+
+                        + Nova Categoria
+
+                    </button>
+
+                </div>
+
+                <div class="panel">
+
+                    <table>
+
+                        <thead>
+
+                        <tr>
+
+                            <th>
+                                ID
+                            </th>
+
+                            <th>
+                                Categoria
+                            </th>
+
+                            <th>
+                                Ações
+                            </th>
+
+                        </tr>
+
+                        </thead>
+
+                        <tbody
+                            id="categories-table">
+                        </tbody>
+
+                    </table>
+
+                    <div
+                        id="categories-empty"
+                        class="empty-state hidden">
+
+                        <div class="empty-icon">
+                            📂
+                        </div>
+
+                        <strong>
+                            Nenhuma categoria encontrada
+                        </strong>
+
+                        <span>
+                            Cadastre uma categoria para organizar seus produtos.
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div
+                id="movements-page"
+                class="page hidden">
+
+                <div class="page-actions">
+
+                    <div>
+
+                        <h3>
+                            Movimentações
+                        </h3>
+
+                        <p>
+                            Registre entradas e saídas do estoque.
+                        </p>
+
+                    </div>
+
+                    <button
+                        class="primary-button"
+                        onclick="openMovementForm()">
+
+                        + Nova Movimentação
+
+                    </button>
+
+                </div>
+
+                <div class="panel">
+
+                    <table>
+
+                        <thead>
+
+                        <tr>
+
+                            <th>
+                                ID
+                            </th>
+
+                            <th>
+                                Produto
+                            </th>
+
+                            <th>
+                                Tipo
+                            </th>
+
+                            <th>
+                                Quantidade
+                            </th>
+
+                            <th>
+                                Data
+                            </th>
+
+                        </tr>
+
+                        </thead>
+
+                        <tbody
+                            id="movements-table">
+                        </tbody>
+
+                    </table>
+
+                    <div
+                        id="movements-empty"
+                        class="empty-state hidden">
+
+                        <div class="empty-icon">
+                            📦
+                        </div>
+
+                        <strong>
+                            Nenhuma movimentação encontrada
+                        </strong>
+
+                        <span>
+                            Registre uma entrada ou saída para começar.
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<div
+    id="product-modal"
+    class="modal hidden">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <div>
+
+                <h3 id="product-form-title">
+                    Novo Produto
+                </h3>
+
+                <p>
+                    Preencha os dados do produto.
+                </p>
+
+            </div>
+
+            <button
+                class="close-button"
+                onclick="closeProductForm()">
+
+                ×
+
+            </button>
+
+        </div>
+
+        <form id="product-form">
+
+            <input
+                type="hidden"
+                id="product-id">
+
+            <label>
+
+                Nome do produto
+
+                <input
+                    type="text"
+                    id="product-name"
+                    required>
+
+            </label>
+
+            <label>
+
+                Preço
+
+                <input
+                    type="text"
+                    id="product-price"
+                    inputmode="decimal"
+                    placeholder="Ex.: 5,99"
+                    required>
+
+            </label>
+
+            <label>
+
+                Quantidade
+
+                <input
+                    type="number"
+                    id="product-quantity"
+                    min="1"
+                    required>
+
+            </label>
+
+            <label>
+
+                Categoria
+
+                <select
+                    id="product-category"
+                    required>
+
+                    <option value="">
+                        Selecione uma categoria
+                    </option>
+
+                </select>
+
+            </label>
+
+            <div class="form-actions">
+
+                <button
+                    type="button"
+                    class="secondary-button"
+                    onclick="closeProductForm()">
+
+                    Cancelar
+
+                </button>
+
+                <button
+                    type="submit"
+                    class="primary-button">
+
+                    Salvar
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<div
+    id="category-modal"
+    class="modal hidden">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <div>
+
+                <h3 id="category-form-title">
+                    Nova Categoria
+                </h3>
+
+                <p>
+                    Cadastre uma categoria para seus produtos.
+                </p>
+
+            </div>
+
+            <button
+                class="close-button"
+                onclick="closeCategoryForm()">
+
+                ×
+
+            </button>
+
+        </div>
+
+        <form id="category-form">
+
+            <input
+                type="hidden"
+                id="category-id">
+
+            <label>
+
+                Nome da categoria
+
+                <input
+                    type="text"
+                    id="category-name"
+                    required>
+
+            </label>
+
+            <div class="form-actions">
+
+                <button
+                    type="button"
+                    class="secondary-button"
+                    onclick="closeCategoryForm()">
+
+                    Cancelar
+
+                </button>
+
+                <button
+                    type="submit"
+                    class="primary-button">
+
+                    Salvar
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<div
+    id="movement-modal"
+    class="modal hidden">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <div>
+
+                <h3>
+                    Nova Movimentação
+                </h3>
+
+                <p>
+                    Registre uma entrada ou saída do estoque.
+                </p>
+
+            </div>
+
+            <button
+                class="close-button"
+                onclick="closeMovementForm()">
+
+                ×
+
+            </button>
+
+        </div>
+
+        <form id="movement-form">
+
+            <label>
+
+                Produto
+
+                <select
+                    id="movement-product"
+                    required>
+
+                    <option value="">
+                        Selecione um produto
+                    </option>
+
+                </select>
+
+            </label>
+
+            <label>
+
+                Tipo de movimentação
+
+                <select
+                    id="movement-type"
+                    required>
+
+                    <option value="">
+                        Selecione o tipo
+                    </option>
+
+                    <option value="ENTRADA">
+                        Entrada
+                    </option>
+
+                    <option value="SAIDA">
+                        Saída
+                    </option>
+
+                </select>
+
+            </label>
+
+            <label>
+
+                Quantidade
+
+                <input
+                    type="number"
+                    id="movement-quantity"
+                    min="1"
+                    required>
+
+            </label>
+
+            <div class="form-actions">
+
+                <button
+                    type="button"
+                    class="secondary-button"
+                    onclick="closeMovementForm()">
+
+                    Cancelar
+
+                </button>
+
+                <button
+                    type="submit"
+                    class="primary-button">
+
+                    Registrar
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script src="/js/app.js"></script>
+
+</body>
+
+</html>
